@@ -41,13 +41,19 @@ function ProductDetail() {
  }
 
     return (
-        <div>
-            <img src={products.image} alt={products.title} />
-            <h2>{products.title}</h2>
-            <p>Price: ${products.price.toFixed(2)}</p>
-            <p>Category: {products.category}</p>
-            <p>Description: {products.description}</p>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div>
+            <img src={products.image} alt={products.title} className="w-full h-96 object-contain bg-white rounded-md shadow-md p-8"/>
+            </div>
+            <div className="flex flex-col justify-center">
+            <h2 className="text-4xl font-bold text-gray-900">{products.title}</h2>
+            <p className="text-2xl font-bold text-blue-600">Price: ${products.price.toFixed(2)}</p>
+            <p className="text-lg text-gray-500">Category: {products.category}</p>
+            <p className="text-lg text-gray-600 mt-4">Description: {products.description}</p>
+            </div>
         </div>
+        
     );
 }
 
