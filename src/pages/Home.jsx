@@ -36,7 +36,7 @@ const handlesearch = useCallback((e) => {
 
 const filterproduct =  useMemo(()=>{
   return data.filter((item)=>{
-    return item.title.toLowerCase() .includes(search)
+    return item.title.toLowerCase().includes(search)
   })
 },[data,search])
 
@@ -68,7 +68,7 @@ if (loading) {
         placeholder="Search for products..." 
         value={search}
         onChange={handlesearch}
-        className="text-center"/>
+        />
         </section>
         <h3 className="text-lg font-semibold text-gray-700 mt-4">total products are : {data.length} </h3>
        

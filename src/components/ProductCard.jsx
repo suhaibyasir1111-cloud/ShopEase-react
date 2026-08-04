@@ -22,7 +22,7 @@ console.log("product card rendered");
 
         <Link to={`/productdetail/${product.id}`}>  
 
-          <img className="h-52 *:w-full object-containp-4" src={product.image} alt={product.title} className="w-full h-40 object-contain" />
+          <img className="h-52 *:w-full object-containp-4" src={product.image} alt={product.title} />
            <h3 className="text-lg font-semibold text-gray-800">{product.title}</h3>
         </Link>  
            <p className="text-blue-600 font-bold mt-2 text-xl">{product.price}</p>
