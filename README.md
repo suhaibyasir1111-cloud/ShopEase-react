@@ -1,36 +1,131 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ShopEase – E-Commerce Web Application
+
+ShopEase is a full-stack e-commerce web application built with Next.js, React, TypeScript, and PostgreSQL. It provides a shopping experience for customers and a dedicated admin dashboard for managing products and orders.
+
+## Features
+
+### Customer Features
+- User registration and login
+- Secure password hashing
+- Product listing and product details
+- Shopping cart management
+- Checkout and order placement
+- Order history and order details
+- User profile API
+
+### Admin Features
+- Admin dashboard with overview and charts
+- Create, update, and delete products
+- View and manage customer orders
+- Product and order management APIs
+
+### Backend Features
+- REST API routes using Next.js
+- PostgreSQL database integration
+- Prisma ORM
+- JWT-based authentication
+- Input validation using Zod
+- Form handling with React Hook Form
+
+## Tech Stack
+
+| Technology | Purpose |
+|---|---|
+| Next.js 16 | Full-stack framework |
+| React 19 | UI development |
+| TypeScript | Type safety |
+| Tailwind CSS 4 | Styling |
+| PostgreSQL | Database |
+| Prisma ORM 7 | Database management |
+| JWT | Authentication |
+| bcryptjs | Password hashing |
+| Zod | Input validation |
+| React Hook Form | Form handling |
+| Chart.js | Dashboard charts |
+
+## Project Structure
+
+```text
+next-shop/
+├── app/
+│   ├── (authorize)/
+│   ├── (shop)/
+│   ├── admin/
+│   ├── api/
+│   ├── lib/
+│   ├── orders/
+│   └── products/
+├── components/
+├── contexts/
+├── prisma/
+├── public/
+├── package.json
+└── README.md
+```
 
 ## Getting Started
 
-First, run the development server:
+### 1. Clone the Repository
+
+```bash
+git clone -b nextjs-version https://github.com/suhaibyasir1111-cloud/ShopEase-react.git
+```
+
+### 2. Navigate to the Project
+
+```bash
+cd ShopEase-react
+```
+
+### 3. Install Dependencies
+
+```bash
+npm install
+```
+
+### 4. Configure Environment Variables
+
+Create a `.env` file in the project root and configure the required database and authentication variables.
+
+```env
+DATABASE_URL="your_postgresql_connection_url"
+SHADOW_DATABASE_URL="your_shadow_database_url"
+JWT_SECRET="your_secure_secret"
+```
+
+Use your own database credentials and a strong secret. Never commit your `.env` file.
+
+### 5. Run Database Migrations
+
+```bash
+npx prisma migrate deploy
+npx prisma generate
+```
+
+### 6. Start Development Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Production Build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm run start
+```
 
-## Learn More
+## Future Improvements
 
-To learn more about Next.js, take a look at the following resources:
+- Online payment gateway integration
+- Product search and filtering enhancements
+- Improved automated testing
+- Production deployment
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Author
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+**Shoaib Yasir**
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+GitHub: [suhaibyasir1111-cloud](https://github.com/suhaibyasir1111-cloud)
