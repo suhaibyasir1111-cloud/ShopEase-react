@@ -17,7 +17,13 @@ export async function PATCH(request:Request,{params}:{params: Promise<{id:string
    }
    
     const {id}= await params; 
-    
+    const productId = Number(id);
+    if (!Number.isInteger(productId) || productId <= 0) {
+  return NextResponse.json(
+    { message: "Invalid product ID" },
+    { status: 400 }
+  );
+}
     const body = await request.json();
     const result = productSchema.partial().safeParse(body);
     if (!result.success) {
@@ -26,7 +32,7 @@ export async function PATCH(request:Request,{params}:{params: Promise<{id:string
     const product =await prisma.product.update({
       
         where:{
-            id:Number(id)
+            id:productId
         },
         data: result.data
         /*{
@@ -53,8 +59,13 @@ if (user.role !== "ADMIN") {
   );
 }
   const {id}  = await params;
-  
   const productid = Number(id);
+  if (!Number.isInteger(productid) || productid <= 0) {
+  return NextResponse.json(
+    { message: "Invalid product ID" },
+    { status: 400 }
+  );
+}
   //const body = await request.json();
   //const result =await productSchema.partial().safeParse(body);
   //if(!result.success){
@@ -66,6 +77,7 @@ if (user.role !== "ADMIN") {
         //{ status: 400 }
       //);
     //}
+    try{
   const product = await prisma.product.delete({
     where: {
       id: productid
@@ -78,4 +90,23 @@ if (user.role !== "ADMIN") {
     message: "Product deleted successfully",
     product
   });
+ } catch (error) {
+   if (
+    error instanceof Error &&
+    "code" in error &&
+    error.code === "P2025"
+  ) {
+    return NextResponse.json(
+      { message: "Product not found" },
+      { status: 404 }
+    );
+  }
+
+  console.error("DELETE product error:", error);
+
+  return NextResponse.json(
+    { message: "Product deletion failed" },
+    { status: 500 }
+  );
+}
 }

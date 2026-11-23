@@ -1,10 +1,25 @@
 import { NextResponse } from "next/server";
 import prisma from "@/app/lib/prisma";
-
 import { fakeStoreProductSchema } from "@/app/lib/schemas/product";
 import z from "zod";
+import auth from "@/app/lib/auth";
 
 export async function POST() {
+  const user = await auth();
+
+if (!user) {
+  return NextResponse.json(
+    { message: "Unauthorized" },
+    { status: 401 }
+  );
+}
+
+if (user.role !== "ADMIN") {
+  return NextResponse.json(
+    { message: "Forbidden access" },
+    { status: 403 }
+  );
+}
   let response: Response;
     try {
     response = await fetch("https://fakestoreapi.com/products");

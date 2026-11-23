@@ -24,7 +24,7 @@ export async function POST(request: Request){
         const result = jwt.verify(token, secret);
         if(typeof result === "string" || typeof result.userId !== "number"){
             return NextResponse.json({
-                error:"invalid token payload"
+             error:"invalid token payload"
         },{status:401});
      }
 
@@ -40,8 +40,8 @@ export async function POST(request: Request){
      if (!result.success) {
         return NextResponse.json({ error:"invalid checkout data", details: result.error.issues }, { status: 400 }); }
 
-     const { items}=result.data;
-     const order = await checkout(userId, items);
+     const { items,shipping}=result.data;
+     const order = await checkout(userId, items,shipping);
    
      return NextResponse.json({message:"checkout successful", order  },{status:201});
     } catch (error){

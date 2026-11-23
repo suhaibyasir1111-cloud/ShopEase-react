@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useEffect, useState } from "react";
@@ -36,8 +35,7 @@ export default function OrdersPage() {
           );
         }
 
-        const data: { orders: Order[] } =
-          await response.json();
+        const data: { orders: Order[] } =  await response.json();
 
         setOrders(data.orders);
       } catch (err) {

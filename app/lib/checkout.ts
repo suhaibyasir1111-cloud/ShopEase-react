@@ -1,7 +1,13 @@
 import  prisma  from "./prisma";
 
-
- export async function checkout(userId:number, items:{productId:number, quantity:number}[]) {
+type ShippingInfo = {
+  name: string;
+  phone: string;
+  address: string;
+  city: string;
+  postalCode: string;
+};
+ export async function checkout(userId:number, items:{productId:number, quantity:number}[],shipping:ShippingInfo) {
 
   return await prisma.$transaction(async (tx) => {
     const products:any[] =[];
@@ -16,7 +22,7 @@ import  prisma  from "./prisma";
        
     })
     if(!product){
-    throw new Error("Product not found or insufficient stock");}
+    throw new CheckoutError("Product not found or insufficient stock");}
 
     products.push({ ...product,quantity: item.quantity })
  }
@@ -30,13 +36,18 @@ import  prisma  from "./prisma";
     });
 
     if (!user) {
-      throw new Error("User not found");
+      throw new CheckoutError("User not found");
     }
     // Order create
     const order = await tx.order.create({ 
         data : {
             userId,
             total, 
+            shippingName: shipping.name,
+            shippingAddress: shipping.address,
+            shippingCity: shipping.city,
+            shippingPostalCode: shipping.postalCode,
+            shippingPhone: shipping.phone,
         }
     })
     // OrderItem create
@@ -51,19 +62,28 @@ import  prisma  from "./prisma";
     });
  }
     // Stock decreas
-    for (const product of products){
-        await tx.product.update({
-            where:{
-                id:product.id
-            },
-            data:{
-            stock:{
-                decrement:product.quantity
-            }
-        }
-    })
-    return order;
-  } 
+  for (const product of products) {
+  const stockUpdate = await tx.product.updateMany({
+    where: {
+      id: product.id,
+      stock: {
+        gte: product.quantity
+      }
+    },
+    data: {
+      stock: {
+        decrement: product.quantity
+      }
+    }
+  });
+
+  if (stockUpdate.count === 0) {
+    throw new CheckoutError(
+      "Product not found or insufficient stock"
+    );
+  }
+}
+   return order;
  }
  );
   

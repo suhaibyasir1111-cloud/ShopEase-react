@@ -31,8 +31,6 @@ export default async function auth() {
     decoded = {
       userId:payload.userId,
       email:payload.email,
-      
-
     };
   } catch {
     return null;
@@ -40,6 +38,12 @@ export default async function auth() {
   const user = await prisma.user.findUnique({
     where:{
       id:decoded.userId
+    },
+    select:{
+      id:true,
+      email:true,
+      role:true,
+
     }
   })
 
